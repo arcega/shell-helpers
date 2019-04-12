@@ -1,0 +1,38 @@
+#! /usr/bin/env bash
+
+# author: Diego Arcega
+# description: series of helpers to help on everyday tasks
+# version: 1.0
+# license: MIT License
+
+line="(diego.sh) "
+echo "$line Hello, I'm Diego, your personal assistent"
+
+function log() {
+  local texto=$1
+  echo "$line $texto"
+}
+
+function upgrade()
+{
+  sudo apt-get update
+  sudo apt-get upgrade
+}
+
+function rename() {
+  for file in `find ./* -name "*.$1"`;do mv "$file" "${file%.$1}.$2";done
+}
+
+if [ "$1" == "upgrade" ]; then
+  log "I'm upgrading all packages..."
+  upgrade
+  log "Upgraded completed successfully"
+fi
+
+if [ "$1" == "rename" ]; then
+  log "Renaming all .$2 files to .$3"
+  rename $2 $3
+  log "All files successfully renamed"
+fi
+
+exit
